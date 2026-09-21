@@ -4,21 +4,38 @@ let options = {
     "3":"scissor"
 }
 
-let user_input = prompt("Enter your Choice").toLowerCase();
-let randomNumber = Math.floor(Math.random()*3)+1;
-let computer = options[randomNumber];
+let rounds = 5;
 
-if (user_input === computer){
-    console.log("It\'s a tie.")
+function playRound(humanChoice, computerChoice){
+    if (humanChoice === computerChoice) {
+        return `It's a Tie. Computer Choice - ${computerChoice} & Human Choice - ${humanChoice}`;
+    }
+    if (
+        (humanChoice === "rock" && computerChoice === "scissor") ||
+        (humanChoice === "paper" && computerChoice === "rock") ||
+        (humanChoice === "scissor" && computerChoice === "paper")
+    ) {
+        return `User Wins. Computer Choice - ${computerChoice} & Human Choice - ${humanChoice}`;
+    } else {
+        return `Computer Wins. Computer Choice - ${computerChoice} & Human Choice - ${humanChoice}`;
+    }
 }
 
-if (
-    (user_input === "rock" && computer === "scissor") ||
-    (user_input === "scissor" && computer === "paper") ||
-    (user_input === "paper" && computer === "rock")
-){
-    console.log("You win!!")
-} else {
-    console.log("Computer Wins!!!")
+// This function takes & return human choice
+function getHumanChoice() {
+    let user_input = prompt("Enter your Choice").toLowerCase();
+    return user_input;
 }
 
+// This function gets computer's choice
+function getComputerChoice() {
+    let randomNumber = Math.floor(Math.random()*3)+1;  
+    return options[randomNumber];
+}
+
+const humanSelection = getHumanChoice();
+const computerSelection = getComputerChoice();
+
+console.log(playRound(humanSelection, computerSelection));
+
+// Ends here
