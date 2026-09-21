@@ -4,26 +4,28 @@ let options = {
     "3":"scissor"
 }
 
-let rounds = 5;
-
+let humanScore = 0;
+let computerScore = 0;
 function playRound(humanChoice, computerChoice){
     if (humanChoice === computerChoice) {
-        return `It's a Tie. Computer Choice - ${computerChoice} & Human Choice - ${humanChoice}`;
+        return [`Computer Choice - ${computerChoice} & Human Choice - ${humanChoice}`, computerScore, humanScore];
     }
-    if (
+    else if (
         (humanChoice === "rock" && computerChoice === "scissor") ||
         (humanChoice === "paper" && computerChoice === "rock") ||
         (humanChoice === "scissor" && computerChoice === "paper")
     ) {
-        return `User Wins. Computer Choice - ${computerChoice} & Human Choice - ${humanChoice}`;
+        humanScore++;
+        return [`Computer Choice - ${computerChoice} & Human Choice - ${humanChoice}`, computerScore, humanScore];
     } else {
-        return `Computer Wins. Computer Choice - ${computerChoice} & Human Choice - ${humanChoice}`;
+        computerScore++;
+        return [`Computer Choice - ${computerChoice} & Human Choice - ${humanChoice}`, computerScore, humanScore];
     }
 }
 
 // This function takes & return human choice
 function getHumanChoice() {
-    let user_input = prompt("Enter your Choice").toLowerCase();
+    let user_input = prompt("Enter your Choice either Rock, Scissor or Paper.").toLowerCase();
     return user_input;
 }
 
@@ -32,10 +34,33 @@ function getComputerChoice() {
     let randomNumber = Math.floor(Math.random()*3)+1;  
     return options[randomNumber];
 }
+let choices='';
+let humnScr = 0;
+let compScr = 0;
 
-const humanSelection = getHumanChoice();
-const computerSelection = getComputerChoice();
+for(i=0; i<5; i++){
+    const humanSelection = getHumanChoice();
+    const computerSelection = getComputerChoice();
 
-console.log(playRound(humanSelection, computerSelection));
+    const[choic, coScr, huScr] = playRound(humanSelection, computerSelection);
+    choices = choices+ "\n" +choic;
+    humnScr=huScr;
+    compScr=coScr;
+}
+
+
+
+console.log(choices);
+console.log(humnScr);
+console.log(compScr);
+
+if(compScr === humnScr){
+    console.log('its a tie');
+} else if (compScr > humnScr){
+    console.log('Computer Wins');
+} else {
+    console.log('Human Wins');
+}
+
 
 // Ends here
